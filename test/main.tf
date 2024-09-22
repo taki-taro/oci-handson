@@ -20,7 +20,7 @@ resource "oci_core_internet_gateway" "test_internet_gateway" {
 
 resource "oci_core_route_table" "test_route_table" {
     compartment_id = local.compartment_id
-    vcn_id = oci_core_vcn.vcn.id
+    vcn_id = oci_core_vcn.test_vcn.id
     display_name = "terraform_test_route_subnet_public"
     freeform_tags = {
         "Env"= "terraform"
@@ -35,13 +35,13 @@ resource "oci_core_route_table" "test_route_table" {
 resource "oci_core_subnet" "test_subnet_public" {
     cidr_block = local.vcn_subnet_cidr
     compartment_id = local.compartment_id
-    vcn_id = oci_core_vcn.vcn.id
+    vcn_id = oci_core_vcn.test_vcn.id
     display_name = "terraform_test_subnet"
     dns_label = local.dns_label
     freeform_tags = {
         "Env"= "terraform"
     }
-    prohibit_public_ip_on_vnic = "assignPublicIp"
+    prohibit_public_ip_on_vnic = true
     route_table_id = oci_core_route_table.test_route_table.id
 }
 
@@ -61,10 +61,9 @@ resource "oci_core_network_security_group_security_rule" "test_network_security_
     #Required
     network_security_group_id = oci_core_network_security_group.test_network_security_group.id
     direction = "INGRESS"
-    protocol = "TCP"
+    protocol = 6
 
     #Optional
-    destination_type = var.network_security_group_security_rule_destination_type
     source = "119.173.43.178/32"
 }
 
