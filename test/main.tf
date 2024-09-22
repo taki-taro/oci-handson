@@ -16,7 +16,6 @@ resource "oci_core_internet_gateway" "test_internet_gateway" {
     freeform_tags = {
         "Env"= "terraform"
     }
-    route_table_id = oci_core_route_table.test_route_table.id
 }
 
 resource "oci_core_route_table" "test_route_table" {
