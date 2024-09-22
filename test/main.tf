@@ -9,7 +9,7 @@ resource "oci_core_vcn" "test_vcn" {
 }
 
 resource "oci_core_internet_gateway" "test_internet_gateway" {
-    compartment_id = var.compartment_id
+    compartment_id = local.compartment_id
     vcn_id = oci_core_vcn.test_vcn.id
     enabled = "true"
     display_name = "terraform_test_internet_gateway"
